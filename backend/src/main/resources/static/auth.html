@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register | CARTEX</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="auth-page auth-page-3d">
+    <div id="canvas-container"></div>
+
+    <div class="auth-page-wrapper">
+        <a href="index.html" class="auth-back-link"><i class="fas fa-arrow-left"></i> Back to CARTEX</a>
+
+        <div class="auth-card auth-card-3d">
+            <div class="auth-card-shine"></div>
+            <h1 class="auth-logo-3d">CART<span>EX</span></h1>
+            <p class="auth-page-subtitle" id="authPageSubtitle">Sign in to continue shopping</p>
+
+            <div class="auth-tabs">
+                <button type="button" class="auth-tab active" id="loginTab" data-mode="login">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <button type="button" class="auth-tab" id="registerTab" data-mode="register">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <div class="input-wrap-3d"><i class="fas fa-envelope"></i>
+                    <input type="email" id="loginEmail" placeholder="Email Address" required autocomplete="email">
+                </div>
+                <div class="input-wrap-3d"><i class="fas fa-lock"></i>
+                    <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password">
+                    <button type="button" class="password-toggle" data-target="loginPassword" aria-label="Show password">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <p id="loginError" class="auth-error" hidden></p>
+                <button type="submit" class="btn-primary auth-submit-3d" id="loginSubmitBtn">
+                    <span>Login</span><i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <form id="registerForm" class="auth-form" hidden>
+                <div class="input-wrap-3d"><i class="fas fa-user"></i>
+                    <input type="text" id="registerName" placeholder="Full Name" required autocomplete="name">
+                </div>
+                <div class="input-wrap-3d"><i class="fas fa-envelope"></i>
+                    <input type="email" id="registerEmail" placeholder="Email Address" required autocomplete="email">
+                </div>
+                <div class="input-wrap-3d"><i class="fas fa-lock"></i>
+                    <input type="password" id="registerPassword" placeholder="Password" required autocomplete="new-password">
+                    <button type="button" class="password-toggle" data-target="registerPassword" aria-label="Show password">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <p id="registerError" class="auth-error" hidden></p>
+                <button type="submit" class="btn-primary auth-submit-3d" id="registerSubmitBtn">
+                    <span>Create Account</span><i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="auth-3d.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

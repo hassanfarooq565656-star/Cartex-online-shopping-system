@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CARTEX | Smart Online Shopping</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+</head>
+
+<body>
+
+    <div id="canvas-container"></div>
+
+
+
+    <nav class="navbar">
+
+        <div class="container">
+
+            <a href="#" class="logo">CART<span>EX</span></a>
+
+            <div class="search-bar">
+
+                <input type="text" id="searchInput" placeholder="Search products...">
+
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+
+            </div>
+
+            <div class="nav-icons">
+
+                <span id="navUser" class="nav-username"></span>
+
+                <div id="authNavButtons" class="auth-nav-buttons">
+
+                    <a href="auth.html?mode=login&return=index.html" class="nav-auth-btn">Login</a>
+
+                    <a href="auth.html?mode=register&return=index.html" class="nav-auth-btn nav-auth-btn-primary">Register</a>
+
+                </div>
+
+                <a href="admin.html" id="adminLink" class="nav-auth-btn" style="display: none; border-color: rgba(99, 102, 241, 0.5); color: #c7d2fe;">
+                    <i class="fas fa-user-shield"></i> Admin
+                </a>
+
+                <a href="records.html" id="recordsLink" class="nav-auth-btn records-link" style="display: none;">
+
+                    <i class="fas fa-receipt"></i> Records
+
+                </a>
+
+                <a href="cart.html" class="cart-icon">
+
+                    <i class="fas fa-shopping-cart"></i>
+
+                    <span id="cartCount">0</span>
+
+                </a>
+
+                <button type="button" onclick="logout()" id="logoutBtn" class="logout-btn" style="display: none;">
+
+                    <i class="fas fa-sign-out-alt"></i> Logout
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <header class="hero">
+
+        <div class="container">
+
+            <div class="hero-content">
+
+                <p id="aiGreeting" class="ai-greeting" hidden></p>
+
+                <h1>Cart Your Dreams</h1>
+
+                <p>Smart online shopping and recommendation system where you can buy the things you dream.</p>
+
+                <a href="#shop" class="btn-primary">Enter Experience</a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <div id="orderSuccessToast" class="order-success-toast" hidden>
+        <i class="fas fa-check-circle"></i>
+        <span>Order placed! Your cart is empty — start shopping fresh.</span>
+        <a href="records.html" class="toast-link">View records</a>
+    </div>
+
+    <section id="aiRecommendationBanner" class="ai-recommendation-banner" hidden>
+        <div class="container">
+            <div class="ai-rec-header">
+                <div class="ai-rec-title-wrap">
+                    <i class="fas fa-robot"></i>
+                    <h3>Personalized for You</h3>
+                </div>
+                <button type="button" class="ai-rec-dismiss" onclick="dismissRecommendations()" aria-label="Dismiss">&times;</button>
+            </div>
+            <p id="aiRecMessage" class="ai-rec-message"></p>
+            <div id="aiRecProducts" class="ai-rec-products"></div>
+        </div>
+    </section>
+
+    <section id="supportChat" class="support-chat" hidden>
+        <button type="button" id="supportChatToggle" class="support-chat-toggle" aria-label="Open customer support chat">
+            <i class="fas fa-headset"></i>
+            <span id="supportUnread" class="support-unread" hidden>1</span>
+        </button>
+        <div id="supportChatPanel" class="support-chat-panel" hidden>
+            <div class="support-chat-header">
+                <div>
+                    <span>CARTEX Support</span>
+                    <small>Powered by Grok</small>
+                </div>
+                <button type="button" id="supportChatClose" aria-label="Close customer support chat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="supportChatMessages" class="support-chat-messages" aria-live="polite"></div>
+            <form id="supportChatForm" class="support-chat-form">
+                <input type="text" id="supportChatInput" placeholder="Ask in English, Hindi or Urdu • ہندی یا اردو میں پوچھیں" autocomplete="off">
+                <button type="submit" aria-label="Send support message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <main class="container main-content" id="shop">
+
+        <aside class="sidebar">
+
+            <h3>Categories</h3>
+
+            <ul id="categoryList">
+
+                <li class="active" data-id="all" onclick="filterByCategory('all', this)">All Products</li>
+
+            </ul>
+
+        </aside>
+
+
+
+        <section class="products">
+
+            <div class="section-header">
+
+                <h2 id="currentCategory">Global Collection</h2>
+
+            </div>
+
+            <div class="product-grid" id="productGrid"></div>
+
+        </section>
+
+    </main>
+
+
+
+    <footer class="footer">
+
+        <p>&copy; 2026 CARTEX. Smart online shopping and recommendation system.</p>
+
+    </footer>
+
+
+
+    <script src="config.js"></script>
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
+

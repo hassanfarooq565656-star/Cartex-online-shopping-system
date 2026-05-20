@@ -1,0 +1,25 @@
+# Build
+backend/target/
+**/target/
+
+# IDE
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs & temp
+*.log
+build-log.txt
+filelist.txt
+setup-marker.txt
+
+# Local secrets (never commit)
+**/application-local.properties
+.env
+.env.*

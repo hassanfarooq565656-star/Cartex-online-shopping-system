@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment | CARTEX</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="payment-page">
+    <div id="paymentCanvas"></div>
+
+    <nav class="navbar payment-nav">
+        <div class="container">
+            <a href="index.html" class="logo">CART<span>EX</span></a>
+            <a href="cart.html" class="nav-auth-btn"><i class="fas fa-arrow-left"></i> Back to Cart</a>
+        </div>
+    </nav>
+
+    <main class="payment-main">
+        <div id="paymentLoading" class="payment-loading">
+            <i class="fas fa-spinner fa-spin"></i> Loading payment options...
+        </div>
+
+        <section id="paymentHub" class="payment-hub" hidden>
+            <header class="payment-header-3d">
+                <h1><i class="fas fa-shield-alt"></i> Secure Checkout</h1>
+                <p class="payment-amount-label">Amount due: <strong id="payAmount">$0.00</strong></p>
+            </header>
+
+            <div class="payment-method-grid" id="methodGrid">
+                <button type="button" class="pay-method-card" data-method="bank">
+                    <div class="pay-card-glow"></div>
+                    <i class="fas fa-university"></i>
+                    <h3>Online Pay</h3>
+                    <p>UBL & HBL bank transfer</p>
+                </button>
+                <button type="button" class="pay-method-card" data-method="cod">
+                    <div class="pay-card-glow"></div>
+                    <i class="fas fa-truck"></i>
+                    <h3>Cash on Delivery</h3>
+                    <p>Pay when order arrives</p>
+                </button>
+            </div>
+        </section>
+
+        <!-- Bank flow -->
+        <section id="bankPanel" class="payment-panel-3d" hidden>
+            <button type="button" class="pay-back-btn" data-back="hub"><i class="fas fa-chevron-left"></i> Back</button>
+            <h2><i class="fas fa-university"></i> Bank Transfer</h2>
+            <p class="panel-desc">Select your bank to receive a unique PSID</p>
+            <div class="bank-select-grid">
+                <button type="button" class="bank-option" data-bank="UBL">
+                    <span class="bank-logo">UBL</span>
+                    <span>United Bank Limited</span>
+                </button>
+                <button type="button" class="bank-option" data-bank="HBL">
+                    <span class="bank-logo">HBL</span>
+                    <span>Habib Bank Limited</span>
+                </button>
+            </div>
+            <div id="psidPanel" class="psid-panel" hidden>
+                <div class="psid-card">
+                    <p class="psid-label">Your Payment ID (PSID)</p>
+                    <p id="psidValue" class="psid-value">—</p>
+                    <p class="psid-bank">Bank: <strong id="psidBank"></strong></p>
+                    <p class="psid-amount">Amount: <strong id="psidAmount"></strong></p>
+                    <p class="psid-hint">Complete transfer in your banking app, then confirm below.</p>
+                </div>
+                <button type="button" id="confirmPaidBtn" class="btn-primary pay-confirm-btn">
+                    <i class="fas fa-check-circle"></i> I Have Paid
+                </button>
+            </div>
+            <p id="bankError" class="auth-error bank-init-error" hidden></p>
+        </section>
+
+        <!-- COD flow -->
+        <section id="codPanel" class="payment-panel-3d" hidden>
+            <button type="button" class="pay-back-btn" data-back="hub"><i class="fas fa-chevron-left"></i> Back</button>
+            <h2><i class="fas fa-truck"></i> Cash on Delivery</h2>
+            <p class="panel-desc">Enter delivery details for your order</p>
+            <form id="codForm" class="cod-form">
+                <input type="text" id="codName" placeholder="Full Name" required>
+                <input type="tel" id="codPhone" placeholder="Phone Number" required>
+                <input type="text" id="codAddress" placeholder="Street Address" required>
+                <input type="text" id="codCity" placeholder="City" required>
+                <p id="codError" class="auth-error" hidden></p>
+                <button type="submit" class="btn-primary pay-confirm-btn">
+                    <i class="fas fa-box"></i> Place Order (COD)
+                </button>
+            </form>
+        </section>
+
+        <p id="paymentError" class="auth-error payment-global-error" hidden></p>
+    </main>
+
+    <div id="paymentSuccessOverlay" class="payment-success-overlay" hidden>
+        <div class="payment-success-backdrop"></div>
+        <div class="payment-success-card">
+            <div id="successCanvasWrap" class="success-canvas-wrap">
+                <canvas id="successCanvas"></canvas>
+            </div>
+            <h2 id="successTitle" class="success-title">Thank You!</h2>
+            <p id="successLine1" class="success-line"></p>
+            <p id="successLine2" class="success-line success-line-sub"></p>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="payment-3d.js"></script>
+    <script src="payment-success-overlay.js"></script>
+    <script src="payment.js"></script>
+</body>
+</html>

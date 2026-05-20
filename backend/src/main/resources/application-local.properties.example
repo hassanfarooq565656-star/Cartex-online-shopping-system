@@ -1,0 +1,4 @@
+# Copy to application-local.properties (gitignored) for your real secrets:
+# spring.datasource.password=your_actual_password
+# gemini.api.key=your_gemini_key
+# grok.api.key=your_grok_key

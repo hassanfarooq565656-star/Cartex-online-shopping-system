@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | CARTEX</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .admin-main { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+        .admin-tabs { display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; }
+        .admin-tab { background: none; border: none; color: #94a3b8; font-size: 1.1rem; font-weight: 600; cursor: pointer; padding: 0.5rem 1rem; border-radius: 8px; transition: 0.3s; }
+        .admin-tab.active { background: rgba(99, 102, 241, 0.2); color: white; }
+        
+        .admin-section { background: var(--glass); backdrop-filter: blur(20px); border-radius: 24px; padding: 2rem; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 2rem; }
+        .admin-section h2 { margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+        
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .admin-table th { text-align: left; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); color: #94a3b8; font-size: 0.85rem; text-transform: uppercase; }
+        .admin-table td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle; }
+        
+        .product-form { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .form-group label { font-size: 0.9rem; color: #94a3b8; }
+        .form-group input, .form-group select, .form-group textarea { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 0.8rem; color: white; outline: none; }
+        .form-group input:focus { border-color: var(--primary); }
+        
+        .btn-delete { background: rgba(244, 63, 94, 0.1); color: var(--accent); border: 1px solid rgba(244, 63, 94, 0.2); padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; }
+        .btn-delete:hover { background: var(--accent); color: white; }
+
+        .user-order-card { background: rgba(255,255,255,0.03); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid rgba(255,255,255,0.05); }
+        .user-order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .order-row { display: flex; justify-content: space-between; padding: 0.5rem 0; font-size: 0.9rem; color: #cbd5e1; }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">CART<span>EX</span></a>
+            <div class="nav-icons">
+                <a href="index.html" class="nav-auth-btn"><i class="fas fa-store"></i> Back to Shop</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="admin-main">
+        <h1 style="margin-bottom: 2rem;"><i class="fas fa-user-shield" style="color:var(--primary)"></i> Admin Dashboard</h1>
+        
+        <div class="admin-tabs">
+            <button class="admin-tab active" onclick="switchTab('products')">Product Management</button>
+            <button class="admin-tab" onclick="switchTab('orders')">User Orders</button>
+        </div>
+
+        <section id="productsSection" class="admin-section">
+            <h2 id="formTitle"><i class="fas fa-plus-circle"></i> Add New Product</h2>
+            <form id="addProductForm" class="product-form">
+                <input type="hidden" id="pId">
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" id="pName" required placeholder="e.g. Pro Headphones">
+                </div>
+                <div class="form-group">
+                    <label>Price ($)</label>
+                    <input type="number" step="0.01" id="pPrice" required placeholder="99.99">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="pCategory" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Product Image</label>
+                    <div style="display:flex; gap:0.5rem;">
+                        <input type="text" id="pImage" required placeholder="Paste Link or Upload -->" style="flex:1;">
+                        <label for="fileUpload" class="btn-primary" style="padding:0.8rem; cursor:pointer; display:flex; align-items:center; justify-content:center; width:50px; margin:0;">
+                            <i class="fas fa-upload"></i>
+                        </label>
+                        <input type="file" id="fileUpload" hidden accept="image/*">
+                    </div>
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                    <label>Description</label>
+                    <textarea id="pDesc" rows="3" placeholder="Describe the product..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Tags (comma separated)</label>
+                    <input type="text" id="pTags" placeholder="tech,audio,new">
+                </div>
+                <div class="form-group">
+                    <label>Stock Quantity</label>
+                    <input type="number" id="pStock" value="50" required>
+                </div>
+                <button type="submit" class="btn-primary" style="grid-column: span 2;">Add Product to Catalog</button>
+            </form>
+
+            <h2 style="margin-top: 3rem;"><i class="fas fa-list"></i> Current Catalog</h2>
+            <div style="overflow-x: auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productAdminList"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="ordersSection" class="admin-section" style="display:none;">
+            <h2><i class="fas fa-shopping-bag"></i> Customer Sales & Orders</h2>
+            <div id="userOrdersList"></div>
+        </section>
+    </main>
+
+    <script src="config.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

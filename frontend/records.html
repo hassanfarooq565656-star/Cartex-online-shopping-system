@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Records | CARTEX</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="records-page">
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">CART<span>EX</span></a>
+            <div class="nav-icons">
+                <span id="recordsNavUser" class="nav-username"></span>
+                <a href="index.html" class="nav-auth-btn"><i class="fas fa-store"></i> Shop</a>
+                <button type="button" onclick="logoutFromRecords()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container records-page-main">
+        <h1><i class="fas fa-receipt"></i> Shopping Records</h1>
+        <p class="records-intro">Your order history loaded from the database.</p>
+        <div id="recordsLoading" class="records-loading">Loading your records...</div>
+        <p id="recordsError" class="auth-error" hidden></p>
+        <div id="recordsList" class="history-body"></div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 CARTEX. Smart online shopping and recommendation system.</p>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="records.js"></script>
+</body>
+</html>
