@@ -3,6 +3,7 @@ backend/target/
 **/target/
 
 # IDE
+.vscode/.git/
 .idea/
 *.iml
 .classpath

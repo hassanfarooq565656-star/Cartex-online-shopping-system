@@ -1,10 +1,10 @@
 let adminUser = null;
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadAppConfig();
     adminUser = getCurrentUser();
-    
-    // Security check: Only allow the specific admin email
-    if (!adminUser || adminUser.email !== 'hassanfarooq565656@gmail.com') {
+
+    if (!adminUser || !isAdminUser(adminUser)) {
         alert('Access Denied. Only the administrator can view this page.');
         window.location.href = 'index.html';
         return;

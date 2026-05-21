@@ -1,4 +1,22 @@
-# Copy to application-local.properties (gitignored) for your real secrets:
-# spring.datasource.password=your_actual_password
-# gemini.api.key=your_gemini_key
-# grok.api.key=your_grok_key
+# =============================================================================
+# API KEYS & SECRETS — copy this file to:
+#   backend/src/main/resources/application-local.properties
+#
+# That file is GITIGNORED. Never commit real keys to GitHub.
+# =============================================================================
+
+# --- MySQL (required to run the app) ---
+spring.datasource.password=YOUR_MYSQL_PASSWORD
+
+# --- Google Gemini (AI product recommendations on home page) ---
+# Get a free key: https://aistudio.google.com/apikey
+gemini.api.key=YOUR_GEMINI_API_KEY
+
+# --- Grok / Groq (AI support chat & greeting) ---
+# xAI Grok: https://console.x.ai/
+# OR Groq (key starts with gsk_): https://console.groq.com/keys
+grok.api.key=YOUR_GROK_OR_GROQ_API_KEY
+grok.model=grok-3-mini
+
+# --- Admin account email (must match login to open admin panel) ---
+app.admin.email=hassanfarooq565656@gmail.com

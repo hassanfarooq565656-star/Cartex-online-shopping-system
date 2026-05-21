@@ -6,19 +6,21 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GrokApiVerifier implements ApplicationRunner {
-    private final GrokService grokService;
 
-    public GrokApiVerifier(GrokService grokService) {
+    private final GrokService grokService;
+    private final GeminiService geminiService;
+
+    public GrokApiVerifier(GrokService grokService, GeminiService geminiService) {
         this.grokService = grokService;
+        this.geminiService = geminiService;
     }
 
     @Override
     public void run(ApplicationArguments args) {
-        if (grokService.isConfigured()) {
-            System.out.println("[GROK] API configured — support chat and greetings enabled.");
-        } else {
-            System.err.println("[GROK] API key not set. Add grok.api.key in application.properties or env.");
-            System.err.println("       Support chat will use fallback responses.");
-        }
+        System.out.println("========== CARTEX API KEYS ==========");
+        System.out.println("Gemini (recommendations): " + (geminiService.isConfigured() ? "OK" : "NOT SET — see CONFIG.md"));
+        System.out.println("Grok/Groq (support chat):  " + (grokService.isConfigured() ? "OK" : "NOT SET — see CONFIG.md"));
+        System.out.println("Status endpoint: http://localhost:8080/api/status");
+        System.out.println("=====================================");
     }
 }

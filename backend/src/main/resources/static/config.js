@@ -1,19 +1,45 @@
+/** CARTEX shared frontend config — no API keys here (all keys are on the backend). */
+
 const API_BASE_URL = (window.location.origin && window.location.protocol.startsWith('http'))
     ? `${window.location.origin}/api`
     : 'http://localhost:8080/api';
 
 const APP_NAME = 'CARTEX';
 
+/** Loaded from GET /api/status; fallback matches default in application.properties */
+let APP_ADMIN_EMAIL = 'hassanfarooq565656@gmail.com';
+
+async function loadAppConfig() {
+    try {
+        const res = await fetch(`${API_BASE_URL}/status`);
+        if (res.ok) {
+            const data = await res.json();
+            if (data.adminEmail) APP_ADMIN_EMAIL = data.adminEmail;
+        }
+    } catch (_) { /* backend offline */ }
+}
+
+function isAdminUser(user) {
+    if (!user || !user.email) return false;
+    return user.email.trim().toLowerCase() === APP_ADMIN_EMAIL.trim().toLowerCase();
+}
+
 function getCurrentUser() {
     try {
-        return JSON.parse(localStorage.getItem('user'));
+        const raw = localStorage.getItem('user');
+        if (!raw) return null;
+        const user = JSON.parse(raw);
+        if (user.password) delete user.password;
+        return user;
     } catch {
         return null;
     }
 }
 
 function setCurrentUser(user) {
-    localStorage.setItem('user', JSON.stringify(user));
+    if (!user) return;
+    const safe = { id: user.id, username: user.username, email: user.email };
+    localStorage.setItem('user', JSON.stringify(safe));
 }
 
 function clearCurrentUser() {
@@ -29,7 +55,6 @@ function escapeHtml(str) {
         .replace(/'/g, '&#39;');
 }
 
-/** Clear cart on server and locally so user can shop fresh after checkout */
 async function clearCartEverywhere(userId) {
     localStorage.setItem('cart', '[]');
     sessionStorage.removeItem('pendingCartProduct');

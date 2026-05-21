@@ -5,6 +5,7 @@ let recLoadTimer = null;
 let supportChatReady = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
+    await loadAppConfig();
     currentUser = getCurrentUser();
     init3DBackground();
     updateNavAuth();
@@ -76,12 +77,7 @@ function updateNavAuth() {
         logoutBtn.style.display = 'flex';
         recordsLink.style.display = 'inline-flex';
         
-        // Show Admin link only for specific user
-        if (currentUser.email === 'hassanfarooq565656@gmail.com') {
-            if (adminLink) adminLink.style.display = 'inline-flex';
-        } else {
-            if (adminLink) adminLink.style.display = 'none';
-        }
+        if (adminLink) adminLink.style.display = isAdminUser(currentUser) ? 'inline-flex' : 'none';
     } else {
         navUser.textContent = '';
         navUser.style.display = 'none';

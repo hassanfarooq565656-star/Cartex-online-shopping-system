@@ -49,6 +49,24 @@ Most errors happen when the IDE sees **duplicate folders** or **Java is not inst
 
 The old duplicate `hassan\hassan\` copy was removed — only `backend\` contains Java code now.
 
+## API keys & secrets
+
+**Read [CONFIG.md](CONFIG.md)** — all keys go in one file:
+
+`backend/src/main/resources/application-local.properties`
+
+Quick start: double-click **`setup-secrets.bat`** (copies the example file and opens it in Notepad).
+
+| Key | Purpose |
+|-----|---------|
+| `spring.datasource.password` | MySQL |
+| `gemini.api.key` | AI recommendations |
+| `grok.api.key` | AI support chat |
+
+Check configuration: `http://localhost:8080/api/status`
+
+---
+
 ## Setup
 
 ### 1. Database
@@ -61,15 +79,7 @@ Or let Spring Boot create tables automatically (`ddl-auto=update`) on first run.
 
 ### 2. Configuration
 
-Edit `backend/src/main/resources/application.properties`:
-
-```properties
-spring.datasource.password=YOUR_MYSQL_PASSWORD
-grok.api.key=YOUR_GROK_OR_GROQ_KEY
-gemini.api.key=YOUR_GEMINI_KEY
-```
-
-Or set environment variables: `DB_PASSWORD`, `GROK_API_KEY`, `GEMINI_API_KEY`.
+Run `setup-secrets.bat` or copy `application-local.properties.example` → `application-local.properties` and fill in your keys.
 
 ### 3. Run
 

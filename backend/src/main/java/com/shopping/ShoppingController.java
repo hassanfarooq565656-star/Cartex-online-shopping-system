@@ -22,6 +22,7 @@ public class ShoppingController {
     @Autowired private PaymentService paymentService;
     @Autowired private GeminiService geminiService;
     @Autowired private GrokService grokService;
+    @Autowired private AppConfig appConfig;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
@@ -35,7 +36,8 @@ public class ShoppingController {
         }
         user.setEmail(user.getEmail().trim().toLowerCase());
         user.setUsername(user.getUsername().trim());
-        return ResponseEntity.ok(userRepository.save(user));
+        User saved = userRepository.save(user);
+        return ResponseEntity.ok(UserPublicDto.from(saved));
     }
 
     @PostMapping("/login")
@@ -45,7 +47,7 @@ public class ShoppingController {
         }
         User found = userRepository.findByEmail(user.getEmail().trim().toLowerCase());
         if (found != null && found.getPassword().equals(user.getPassword())) {
-            return ResponseEntity.ok(found);
+            return ResponseEntity.ok(UserPublicDto.from(found));
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid email or password."));
     }
@@ -107,6 +109,10 @@ public class ShoppingController {
         
         Long productId = Long.valueOf(body.get("productId").toString());
         int addQty = body.containsKey("quantity") ? Integer.parseInt(body.get("quantity").toString()) : 1;
+        Product product = productRepository.findById(productId).orElse(null);
+        if (product == null) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Product not found."));
+        }
 
         CartItem item = cartItemRepository.findByUserIdAndProductId(userId, productId).orElse(null);
         if (item == null) {
@@ -339,7 +345,7 @@ public class ShoppingController {
 
     private boolean isAdmin(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
-        return user != null && "hassanfarooq565656@gmail.com".equalsIgnoreCase(user.getEmail());
+        return user != null && appConfig.isAdminEmail(user.getEmail());
     }
 
     @GetMapping("/admin/stats/{userId}")
@@ -350,7 +356,7 @@ public class ShoppingController {
         List<Map<String, Object>> userOrderData = new ArrayList<>();
         
         for (User u : users) {
-            if ("hassanfarooq565656@gmail.com".equalsIgnoreCase(u.getEmail())) continue;
+            if (appConfig.isAdminEmail(u.getEmail())) continue;
             List<Order> orders = orderRepository.findByUser_IdOrderByOrderDateDesc(u.getId());
             Map<String, Object> map = new LinkedHashMap<>();
             map.put("username", u.getUsername());

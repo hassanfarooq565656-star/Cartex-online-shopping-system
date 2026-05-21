@@ -30,7 +30,7 @@ public class GrokService {
             .build();
 
     public boolean isConfigured() {
-        return apiKey != null && !apiKey.isBlank();
+        return apiKey != null && !apiKey.isBlank() && !apiKey.startsWith("YOUR_");
     }
 
     public String supportGreeting(String username) {
