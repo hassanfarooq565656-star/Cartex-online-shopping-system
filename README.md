@@ -133,3 +133,6 @@ Admin panel: http://localhost:8080/admin.html
 - AI support chat (Grok/Groq API)
 - AI product recommendations (Gemini API)
 - Admin product & order management
+
+## Author
+Hassan Farooq
